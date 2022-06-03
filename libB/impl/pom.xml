@@ -22,7 +22,7 @@
             <groupId>foo</groupId>
             <artifactId>libA-impl2</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <scope>runtime</scope> <!-- Changing this to runtime works, but then it breaks the app -->
+            <scope>test</scope> <!-- Changing this to runtime works, but then it breaks the app -->
         </dependency>
     </dependencies>
 </project>
