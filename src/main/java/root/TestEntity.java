@@ -37,4 +37,8 @@ public class TestEntity {
     public int counter() {
         return counter;
     }
+
+    public long version() {
+        return version;
+    }
 }

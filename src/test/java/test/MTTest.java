@@ -63,6 +63,8 @@ class MTTest {
             thread.join();
         }
 
+        // No errors pls.
+        assertEquals(0, exceptions.size());
 
         // Check
         check(id);
@@ -74,6 +76,7 @@ class MTTest {
         em.persist(t1);
 
         assertEquals(0, t1.counter());
+        assertEquals(0, t1.version());
 
         return t1.id();
     }
@@ -107,6 +110,7 @@ class MTTest {
         TestEntity t1 = em.find(TestEntity.class, id, LockModeType.PESSIMISTIC_WRITE);
         assertNotNull(t1);
         assertEquals(8, t1.counter());
+        assertEquals(8, t1.version());
     }
 
 }
