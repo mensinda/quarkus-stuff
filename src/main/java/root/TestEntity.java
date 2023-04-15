@@ -26,6 +26,10 @@ public class TestEntity extends GenericBaseEntity<ActualEnum> {
         this.counter = 0;
     }
 
+    public void updateStateInEntity(ActualEnum newVal) {
+        this.state = newVal;
+    }
+
     public void increment() {
         counter += 1;
     }

@@ -46,6 +46,17 @@ class MTTest {
         check(id);
     }
 
+    /**
+     * Passes
+     */
+    @Test
+    void genericEnum3() {
+        long id = setup();
+
+        modify2(id);
+        check(id);
+    }
+
     @Transactional
     long setup() {
         TestEntity t1 = new TestEntity(counter.incrementAndGet());
@@ -82,6 +93,20 @@ class MTTest {
 
         t1.setState(ActualEnum.BAR);
         t1.increment();
+
+        assertEquals(ActualEnum.BAR, t1.getState());
+    }
+
+    /**
+     * ONLY change the state of the mapped super class -- but via a method in the child class
+     */
+    @Transactional
+    void modify3(long id) {
+        TestEntity t1 = em.find(TestEntity.class, id, LockModeType.PESSIMISTIC_WRITE);
+        assertNotNull(t1);
+
+        t1.updateStateInEntity(ActualEnum.BAR);
+        // t1.increment();
 
         assertEquals(ActualEnum.BAR, t1.getState());
     }

@@ -8,7 +8,7 @@ import jakarta.persistence.MappedSuperclass;
 public abstract class GenericBaseEntity<T extends EnumBase> {
 
     @Enumerated(EnumType.STRING)
-    private T state;
+    protected T state;
 
     public T getState() {
         return state;
