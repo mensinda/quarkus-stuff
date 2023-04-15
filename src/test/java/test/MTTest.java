@@ -22,7 +22,7 @@ class MTTest {
     @Inject
     EntityManager em;
 
-    private final AtomicInteger counter = new AtomicInteger();
+    private static final AtomicInteger counter = new AtomicInteger();
 
     /**
      * Fails
