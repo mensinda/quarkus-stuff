@@ -47,13 +47,13 @@ class MTTest {
     }
 
     /**
-     * Passes
+     * Fails
      */
     @Test
     void genericEnum3() {
         long id = setup();
 
-        modify2(id);
+        modify3(id);
         check(id);
     }
 
