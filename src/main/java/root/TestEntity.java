@@ -6,7 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Version;
 
 @Entity
-public class TestEntity {
+public class TestEntity extends GenericBaseEntity<ActualEnum> {
 
     @Id
     private long id;
