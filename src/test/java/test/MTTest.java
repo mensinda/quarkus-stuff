@@ -21,11 +21,25 @@ class MTTest {
     @Inject
     EntityManager em;
 
+    /**
+     * Fails
+     */
     @Test
-    void genericEnum() throws InterruptedException {
+    void genericEnum1() throws InterruptedException {
         long id = setup();
 
         modify1(id);
+        check(id);
+    }
+
+    /**
+     * Passes
+     */
+    @Test
+    void genericEnum2() throws InterruptedException {
+        long id = setup();
+
+        modify2(id);
         check(id);
     }
 
@@ -41,15 +55,32 @@ class MTTest {
         return t1.id();
     }
 
+    /**
+     * ONLY change the state of the mapped super class
+     */
     @Transactional
     void modify1(long id) {
         TestEntity t1 = em.find(TestEntity.class, id, LockModeType.PESSIMISTIC_WRITE);
         assertNotNull(t1);
 
         t1.setState(ActualEnum.BAR);
-        assertEquals(ActualEnum.BAR, t1.getState());
-
         // t1.increment();
+
+        assertEquals(ActualEnum.BAR, t1.getState());
+    }
+
+    /**
+     * Also call increment to modify something else
+     */
+    @Transactional
+    void modify2(long id) {
+        TestEntity t1 = em.find(TestEntity.class, id, LockModeType.PESSIMISTIC_WRITE);
+        assertNotNull(t1);
+
+        t1.setState(ActualEnum.BAR);
+        t1.increment();
+
+        assertEquals(ActualEnum.BAR, t1.getState());
     }
 
     @Transactional
