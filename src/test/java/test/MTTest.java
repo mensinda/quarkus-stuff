@@ -12,6 +12,7 @@ import jakarta.transaction.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,11 +22,13 @@ class MTTest {
     @Inject
     EntityManager em;
 
+    private final AtomicInteger counter = new AtomicInteger();
+
     /**
      * Fails
      */
     @Test
-    void genericEnum1() throws InterruptedException {
+    void genericEnum1() {
         long id = setup();
 
         modify1(id);
@@ -36,7 +39,7 @@ class MTTest {
      * Passes
      */
     @Test
-    void genericEnum2() throws InterruptedException {
+    void genericEnum2() {
         long id = setup();
 
         modify2(id);
@@ -45,7 +48,7 @@ class MTTest {
 
     @Transactional
     long setup() {
-        TestEntity t1 = new TestEntity(42);
+        TestEntity t1 = new TestEntity(counter.incrementAndGet());
         em.persist(t1);
 
         assertEquals(0, t1.counter());
