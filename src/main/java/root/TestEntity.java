@@ -6,7 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Version;
 
 @Entity
-public class TestEntity extends GenericBaseEntity<ActualEnum> {
+public class TestEntity extends GenericBaseEntity {
 
     @Id
     private long id;
@@ -26,7 +26,7 @@ public class TestEntity extends GenericBaseEntity<ActualEnum> {
         this.counter = 0;
     }
 
-    public void updateStateInEntity(ActualEnum newVal) {
+    public void updateStateInEntity(String newVal) {
         this.state = newVal;
     }
 

@@ -1,20 +1,17 @@
 package root;
 
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public abstract class GenericBaseEntity<T extends EnumBase> {
+public abstract class GenericBaseEntity {
 
-    @Enumerated(EnumType.STRING)
-    protected T state;
+    protected String state;
 
-    public T getState() {
+    public String getState() {
         return state;
     }
 
-    public void setState(T state) {
+    public void setState(String state) {
         this.state = state;
     }
 }
