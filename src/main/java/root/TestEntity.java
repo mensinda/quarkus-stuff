@@ -19,6 +19,8 @@ public class TestEntity extends GenericBaseEntity {
 
     String ppState;
 
+    public String publicState;
+
     protected TestEntity() {
         // For JPA
     }

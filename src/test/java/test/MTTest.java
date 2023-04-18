@@ -26,7 +26,7 @@ class MTTest {
      * Passes
      */
     @Test
-    void updateTest1() {
+    void updateParent() {
         long id = setup();
 
         modify1(id);
@@ -37,7 +37,7 @@ class MTTest {
      * Passes
      */
     @Test
-    void updateTest2() {
+    void updateParentInc() {
         long id = setup();
 
         modify2(id);
@@ -48,7 +48,7 @@ class MTTest {
      * Fails
      */
     @Test
-    void updateTest3() {
+    void updateParentInBase() {
         long id = setup();
 
         modify3(id);
@@ -59,7 +59,7 @@ class MTTest {
      * Passes
      */
     @Test
-    void updateTest4() {
+    void updateParentInBaseInc() {
         long id = setup();
 
         modify4(id);
@@ -70,7 +70,7 @@ class MTTest {
      * Fails
      */
     @Test
-    void updateTest5() {
+    void updatePackagePrivate() {
         long id = setup();
 
         modify5(id);
@@ -81,11 +81,33 @@ class MTTest {
      * Passes
      */
     @Test
-    void updateTest6() {
+    void updatePackagePrivateInc() {
         long id = setup();
 
         modify6(id);
         checkPP(id);
+    }
+
+    /**
+     * Passes
+     */
+    @Test
+    void updatePublic() {
+        long id = setup();
+
+        modify7(id);
+        checkPU(id);
+    }
+
+    /**
+     * Passes
+     */
+    @Test
+    void updatePublicInc() {
+        long id = setup();
+
+        modify8(id);
+        checkPU(id);
     }
 
     @Transactional
@@ -184,6 +206,34 @@ class MTTest {
         assertEquals("FOO", t1.getPpState());
     }
 
+    /**
+     * ONLY change the package private state -- but outside the entity
+     */
+    @Transactional
+    void modify7(long id) {
+        TestEntity t1 = em.find(TestEntity.class, id, LockModeType.PESSIMISTIC_WRITE);
+        assertNotNull(t1);
+
+        t1.publicState = "FOOBAR";
+        // t1.increment();
+
+        assertEquals("FOOBAR", t1.publicState);
+    }
+
+    /**
+     * ONLY change the package private state -- but outside the entity -- also increment
+     */
+    @Transactional
+    void modify8(long id) {
+        TestEntity t1 = em.find(TestEntity.class, id, LockModeType.PESSIMISTIC_WRITE);
+        assertNotNull(t1);
+
+        t1.publicState = "FOOBAR";
+        t1.increment();
+
+        assertEquals("FOOBAR", t1.publicState);
+    }
+
     @Transactional
     void check(long id) {
         TestEntity t1 = em.find(TestEntity.class, id, LockModeType.PESSIMISTIC_WRITE);
@@ -196,6 +246,13 @@ class MTTest {
         TestEntity t1 = em.find(TestEntity.class, id, LockModeType.PESSIMISTIC_WRITE);
         assertNotNull(t1);
         assertEquals("FOO", t1.getPpState());
+    }
+
+    @Transactional
+    void checkPU(long id) {
+        TestEntity t1 = em.find(TestEntity.class, id, LockModeType.PESSIMISTIC_WRITE);
+        assertNotNull(t1);
+        assertEquals("FOOBAR", t1.publicState);
     }
 
 }
