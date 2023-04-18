@@ -17,6 +17,8 @@ public class TestEntity extends GenericBaseEntity {
 
     private int counter;
 
+    String ppState;
+
     protected TestEntity() {
         // For JPA
     }
@@ -44,5 +46,13 @@ public class TestEntity extends GenericBaseEntity {
 
     public long version() {
         return version;
+    }
+
+    public String getPpState() {
+        return ppState;
+    }
+
+    public void setPpState(String ppState) {
+        this.ppState = ppState;
     }
 }

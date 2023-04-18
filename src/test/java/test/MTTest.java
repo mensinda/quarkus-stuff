@@ -2,6 +2,7 @@ package test;
 
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
+import root.PackagePrivateAccessor;
 import root.TestEntity;
 
 import jakarta.inject.Inject;
@@ -25,7 +26,7 @@ class MTTest {
      * Passes
      */
     @Test
-    void genericEnum1() {
+    void updateTest1() {
         long id = setup();
 
         modify1(id);
@@ -36,7 +37,7 @@ class MTTest {
      * Passes
      */
     @Test
-    void genericEnum2() {
+    void updateTest2() {
         long id = setup();
 
         modify2(id);
@@ -47,7 +48,7 @@ class MTTest {
      * Fails
      */
     @Test
-    void genericEnum3() {
+    void updateTest3() {
         long id = setup();
 
         modify3(id);
@@ -55,14 +56,36 @@ class MTTest {
     }
 
     /**
+     * Passes
+     */
+    @Test
+    void updateTest4() {
+        long id = setup();
+
+        modify4(id);
+        check(id);
+    }
+
+    /**
      * Fails
      */
     @Test
-    void genericEnum4() {
+    void updateTest5() {
         long id = setup();
 
-        modify3(id);
-        check(id);
+        modify5(id);
+        checkPP(id);
+    }
+
+    /**
+     * Passes
+     */
+    @Test
+    void updateTest6() {
+        long id = setup();
+
+        modify6(id);
+        checkPP(id);
     }
 
     @Transactional
@@ -133,11 +156,46 @@ class MTTest {
         assertEquals("BAR", t1.getState());
     }
 
+    /**
+     * ONLY change the package private state -- but outside the entity
+     */
+    @Transactional
+    void modify5(long id) {
+        TestEntity t1 = em.find(TestEntity.class, id, LockModeType.PESSIMISTIC_WRITE);
+        assertNotNull(t1);
+
+        PackagePrivateAccessor.setState4(t1, "FOO");
+        // t1.increment();
+
+        assertEquals("FOO", t1.getPpState());
+    }
+
+    /**
+     * ONLY change the package private state -- but outside the entity -- also increment
+     */
+    @Transactional
+    void modify6(long id) {
+        TestEntity t1 = em.find(TestEntity.class, id, LockModeType.PESSIMISTIC_WRITE);
+        assertNotNull(t1);
+
+        PackagePrivateAccessor.setState4(t1, "FOO");
+        t1.increment();
+
+        assertEquals("FOO", t1.getPpState());
+    }
+
     @Transactional
     void check(long id) {
         TestEntity t1 = em.find(TestEntity.class, id, LockModeType.PESSIMISTIC_WRITE);
         assertNotNull(t1);
         assertEquals("BAR", t1.getState());
+    }
+
+    @Transactional
+    void checkPP(long id) {
+        TestEntity t1 = em.find(TestEntity.class, id, LockModeType.PESSIMISTIC_WRITE);
+        assertNotNull(t1);
+        assertEquals("FOO", t1.getPpState());
     }
 
 }
