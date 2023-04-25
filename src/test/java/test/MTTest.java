@@ -110,6 +110,28 @@ class MTTest {
         checkPU(id);
     }
 
+    /**
+     * Fails
+     */
+    @Test
+    void updatePrivate() {
+        long id = setup();
+
+        modify9(id);
+        checkP(id);
+    }
+
+    /**
+     * Passes
+     */
+    @Test
+    void updatePrivateInc() {
+        long id = setup();
+
+        modify10(id);
+        checkP(id);
+    }
+
     @Transactional
     long setup() {
         TestEntity t1 = new TestEntity(counter.incrementAndGet());
@@ -207,7 +229,7 @@ class MTTest {
     }
 
     /**
-     * ONLY change the package private state -- but outside the entity
+     * ONLY change the public state -- but outside the entity
      */
     @Transactional
     void modify7(long id) {
@@ -221,7 +243,7 @@ class MTTest {
     }
 
     /**
-     * ONLY change the package private state -- but outside the entity -- also increment
+     * ONLY change the public state -- but outside the entity -- also increment
      */
     @Transactional
     void modify8(long id) {
@@ -232,6 +254,34 @@ class MTTest {
         t1.increment();
 
         assertEquals("FOOBAR", t1.publicState);
+    }
+
+    /**
+     * ONLY change the private state -- but outside the entity
+     */
+    @Transactional
+    void modify9(long id) {
+        TestEntity t1 = em.find(TestEntity.class, id, LockModeType.PESSIMISTIC_WRITE);
+        assertNotNull(t1);
+
+        TestEntity.PrivateStateAccessor.setPrivateState(t1, "FOOBAR");
+        // t1.increment();
+
+        assertEquals("FOOBAR", t1.getPrivateState());
+    }
+
+    /**
+     * ONLY change the private state -- but outside the entity -- also increment
+     */
+    @Transactional
+    void modify10(long id) {
+        TestEntity t1 = em.find(TestEntity.class, id, LockModeType.PESSIMISTIC_WRITE);
+        assertNotNull(t1);
+
+        TestEntity.PrivateStateAccessor.setPrivateState(t1, "FOOBAR");
+        t1.increment();
+
+        assertEquals("FOOBAR", t1.getPrivateState());
     }
 
     @Transactional
@@ -253,6 +303,13 @@ class MTTest {
         TestEntity t1 = em.find(TestEntity.class, id, LockModeType.PESSIMISTIC_WRITE);
         assertNotNull(t1);
         assertEquals("FOOBAR", t1.publicState);
+    }
+
+    @Transactional
+    void checkP(long id) {
+        TestEntity t1 = em.find(TestEntity.class, id, LockModeType.PESSIMISTIC_WRITE);
+        assertNotNull(t1);
+        assertEquals("FOOBAR", t1.getPrivateState());
     }
 
 }

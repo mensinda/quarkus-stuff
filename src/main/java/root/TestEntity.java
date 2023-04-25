@@ -21,6 +21,8 @@ public class TestEntity extends GenericBaseEntity {
 
     public String publicState;
 
+    private String privateState;
+
     protected TestEntity() {
         // For JPA
     }
@@ -56,5 +58,15 @@ public class TestEntity extends GenericBaseEntity {
 
     public void setPpState(String ppState) {
         this.ppState = ppState;
+    }
+
+    public String getPrivateState() {
+        return privateState;
+    }
+
+    public static class PrivateStateAccessor {
+        public static void setPrivateState(TestEntity entity, String newState) {
+            entity.privateState = newState;
+        }
     }
 }
