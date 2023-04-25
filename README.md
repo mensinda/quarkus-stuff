@@ -1,4 +1,4 @@
-# Quarkus 3.0 / Hibernate 6 multithreading
+# Quarkus 3.0 / Hibernate 6 dirty entities not written to DB
 
 To reproduce:
 
@@ -10,5 +10,5 @@ To go back to Quarkus 2.x:
 
 ```bash
 ./downgrade.sh
-mvn clean verify # This should work now!
+mvn clean verify # This still won't work!
 ```
