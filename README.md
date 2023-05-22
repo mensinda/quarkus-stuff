@@ -1,4 +1,4 @@
-# Quarkus 3.0 / Hibernate 6 multithreading
+# Locking created entities
 
 To reproduce:
 
@@ -10,5 +10,5 @@ To go back to Quarkus 2.x:
 
 ```bash
 ./downgrade.sh
-mvn clean verify # This should work now!
+mvn clean verify
 ```
