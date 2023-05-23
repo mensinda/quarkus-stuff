@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" xmlns="http://java.sun.com/xml/ns/persistence">
+  <persistence-unit name="TupLink" transaction-type="RESOURCE_LOCAL">
+
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+
+    <class>root.TestEntity</class>
+    <class>root.TestNoVersEntity</class>
+
+    <properties>
+      <property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.H2Platform"/>
+      <property name="eclipselink.logging.level" value="INFO"/>
+      <property name="eclipselink.logging.level.sql" value="FINE"/>
+      <property name="eclipselink.logging.parameters" value="true"/>
+
+      <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+      <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:./target/test;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=10"/>
+      <property name="jakarta.persistence.jdbc.user" value="test"/>
+      <property name="jakarta.persistence.jdbc.driver" value="org.h2.Driver"/>
+      <property name="jakarta.persistence.jdbc.password" value="test"/>
+    </properties>
+  </persistence-unit>
+</persistence>
