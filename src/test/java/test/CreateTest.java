@@ -1,72 +1,36 @@
 package test;
 
+import com.sun.el.ExpressionFactoryImpl;
 import io.quarkus.test.junit.QuarkusTest;
-import jakarta.inject.Inject;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.LockModeType;
-import jakarta.transaction.Transactional;
+import jakarta.el.ExpressionFactory;
+import jakarta.validation.Validation;
 import org.junit.jupiter.api.Test;
-import root.TestEntity;
-import root.TestNoVersEntity;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @QuarkusTest
 class CreateTest {
 
-    @Inject
-    EntityManager em;
-
-    private static long counter = 1;
-
+    /**
+     * This works
+     */
     @Test
-    @Transactional
-    void create() {
-        TestEntity orig = new TestEntity(counter++);
-        em.persist(orig);
-        em.lock(orig, LockModeType.PESSIMISTIC_WRITE);
+    void create1() {
+        new ExpressionFactoryImpl();
     }
 
+    /**
+     * This fails...
+     */
     @Test
-    @Transactional
-    void createLock() {
-        TestEntity orig = new TestEntity(counter++);
-        em.persist(orig);
-
-        TestEntity found = em.find(TestEntity.class, orig.id());
-        assertNotNull(found);
-        em.lock(found, LockModeType.PESSIMISTIC_WRITE);
+    void create2() {
+        ExpressionFactory.newInstance();
     }
 
+    /**
+     * What I actually care about:
+     */
     @Test
-    @Transactional
-    void createFindLock() {
-        TestEntity orig = new TestEntity(counter++);
-        em.persist(orig);
-
-        TestEntity found = em.find(TestEntity.class, orig.id(), LockModeType.PESSIMISTIC_WRITE);
-        assertNotNull(found);
-    }
-
-    @Test
-    @Transactional
-    void createLockNoVers() {
-        TestNoVersEntity orig = new TestNoVersEntity(counter++);
-        em.persist(orig);
-
-        TestNoVersEntity found = em.find(TestNoVersEntity.class, orig.id());
-        assertNotNull(found);
-        em.lock(found, LockModeType.PESSIMISTIC_WRITE);
-    }
-
-    @Test
-    @Transactional
-    void createFindLockNoVers() {
-        TestNoVersEntity orig = new TestNoVersEntity(counter++);
-        em.persist(orig);
-
-        TestNoVersEntity found = em.find(TestNoVersEntity.class, orig.id(), LockModeType.PESSIMISTIC_WRITE);
-        assertNotNull(found);
+    void create3() {
+        Validation.byDefaultProvider().configure().ignoreXmlConfiguration().buildValidatorFactory();
     }
 
 }

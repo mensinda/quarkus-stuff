@@ -1,4 +1,4 @@
-# Locking created entities
+# ExpressionFactory class cast exception
 
 To reproduce:
 
