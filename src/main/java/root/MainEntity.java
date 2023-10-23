@@ -19,7 +19,7 @@ public class MainEntity {
         this.referenced = referenced;
     }
 
-    public ReferencedEntity getReferenced() {
+    public ReferencedEntity referenced() {
         return referenced;
     }
 }
