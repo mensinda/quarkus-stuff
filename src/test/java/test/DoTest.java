@@ -32,6 +32,9 @@ class DoTest {
         em.persist(e3);
     }
 
+    /**
+     * Works as expected
+     */
     @Test
     @Transactional
     void justLoading() {
@@ -44,13 +47,11 @@ class DoTest {
         ReferencedEntity e1 = m.getReferenced();
         assertNotNull(e1);
         assertEquals("ok", e1.status());
-
-        System.out.println("\n--- direct loading\n");
-        ReferencedEntity e2 = em.find(ReferencedEntity.class, 1);
-        assertNotNull(e2);
-        assertEquals("warn", e2.status());
     }
 
+    /**
+     * Works as expected
+     */
     @Test
     @Transactional
     void lock() {
@@ -64,14 +65,11 @@ class DoTest {
         assertNotNull(e1);
         em.lock(e1, LockModeType.PESSIMISTIC_WRITE);
         assertEquals("ok", e1.status());
-
-        System.out.println("\n--- direct loading\n");
-        ReferencedEntity e2 = em.find(ReferencedEntity.class, 1);
-        assertNotNull(e2);
-        em.lock(e2, LockModeType.PESSIMISTIC_WRITE);
-        assertEquals("warn", e2.status());
     }
 
+    /**
+     * Does <b>NOT</b> work as expected! No `select for update`!
+     */
     @Test
     @Transactional
     void refresh() {
@@ -83,16 +81,15 @@ class DoTest {
         assertNotNull(m);
         ReferencedEntity e1 = m.getReferenced();
         assertNotNull(e1);
+
+        // First refresh, then access
         em.refresh(e1, LockModeType.PESSIMISTIC_WRITE);
         assertEquals("ok", e1.status());
-
-        System.out.println("\n--- direct loading\n");
-        ReferencedEntity e2 = em.find(ReferencedEntity.class, 1);
-        assertNotNull(e2);
-        em.refresh(e2, LockModeType.PESSIMISTIC_WRITE);
-        assertEquals("warn", e2.status());
     }
 
+    /**
+     * Works as expected
+     */
     @Test
     @Transactional
     void refreshAfter() {
@@ -104,14 +101,24 @@ class DoTest {
         assertNotNull(m);
         ReferencedEntity e1 = m.getReferenced();
         assertNotNull(e1);
+
+        // First access, then refresh
         assertEquals("ok", e1.status());
         em.refresh(e1, LockModeType.PESSIMISTIC_WRITE);
-        assertEquals("ok", e1.status());
+    }
 
-        System.out.println("\n--- direct loading\n");
+    /**
+     * Works as expected
+     */
+    @Test
+    @Transactional
+    void directLoading() {
+        System.out.println("------------------------------------------------------------");
+        System.out.println("---------------- NEW TEST: directLoading    ----------------");
+        System.out.println("------------------------------------------------------------");
+
         ReferencedEntity e2 = em.find(ReferencedEntity.class, 1);
         assertNotNull(e2);
-        assertEquals("warn", e2.status());
         em.refresh(e2, LockModeType.PESSIMISTIC_WRITE);
         assertEquals("warn", e2.status());
     }

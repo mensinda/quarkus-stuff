@@ -19,15 +19,7 @@ public class MainEntity {
         this.referenced = referenced;
     }
 
-    public long id() {
-        return id;
-    }
-
     public ReferencedEntity getReferenced() {
         return referenced;
-    }
-
-    public void setReferenced(ReferencedEntity referenced) {
-        this.referenced = referenced;
     }
 }

@@ -12,7 +12,6 @@ public class ReferencedEntity {
     private String status;
 
     private ReferencedEntity() {
-        // For JPQ
     }
 
     public ReferencedEntity(long id, String status) {
@@ -20,15 +19,7 @@ public class ReferencedEntity {
         this.status = status;
     }
 
-    public long id() {
-        return id;
-    }
-
     public String status() {
         return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 }
