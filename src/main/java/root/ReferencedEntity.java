@@ -11,7 +11,7 @@ public class ReferencedEntity {
 
     private String status;
 
-    private ReferencedEntity() {
+    protected ReferencedEntity() {
     }
 
     public ReferencedEntity(long id, String status) {
