@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import root.MainEntity;
 import root.ReferencedEntity;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @QuarkusTest
@@ -43,10 +42,9 @@ class DoTest {
         System.out.println("------------------------------------------------------------");
 
         MainEntity m = em.find(MainEntity.class, 0);
+        ReferencedEntity e1 = em.find(ReferencedEntity.class, 0);
         assertNotNull(m);
-        ReferencedEntity e = m.referenced();
-        assertNotNull(e);
-        assertEquals("ok", e.status());
+        assertNotNull(e1);
     }
 
     /**
@@ -60,31 +58,11 @@ class DoTest {
         System.out.println("------------------------------------------------------------");
 
         MainEntity m = em.find(MainEntity.class, 0);
+        ReferencedEntity e1 = em.find(ReferencedEntity.class, 0);
         assertNotNull(m);
-        ReferencedEntity e = m.referenced();
-        assertNotNull(e);
-        em.lock(e, LockModeType.PESSIMISTIC_WRITE);
-        assertEquals("ok", e.status());
-    }
-
-    /**
-     * Does <b>NOT</b> work as expected! No `select for update`!
-     */
-    @Test
-    @Transactional
-    void refresh() {
-        System.out.println("------------------------------------------------------------");
-        System.out.println("---------------- NEW TEST: refresh          ----------------");
-        System.out.println("------------------------------------------------------------");
-
-        MainEntity m = em.find(MainEntity.class, 0);
-        assertNotNull(m);
-        ReferencedEntity e = m.referenced();
-        assertNotNull(e);
-
-        // First refresh, then access
-        em.refresh(e, LockModeType.PESSIMISTIC_WRITE);
-        assertEquals("ok", e.status());
+        assertNotNull(e1);
+        em.lock(m, LockModeType.PESSIMISTIC_WRITE);
+        em.lock(e1, LockModeType.PESSIMISTIC_WRITE);
     }
 
     /**
@@ -92,19 +70,33 @@ class DoTest {
      */
     @Test
     @Transactional
-    void refreshAfter() {
+    void lockBetween() {
         System.out.println("------------------------------------------------------------");
-        System.out.println("---------------- NEW TEST: refreshAfterRead ----------------");
+        System.out.println("---------------- NEW TEST: lockBetween      ----------------");
         System.out.println("------------------------------------------------------------");
 
         MainEntity m = em.find(MainEntity.class, 0);
         assertNotNull(m);
-        ReferencedEntity e = m.referenced();
-        assertNotNull(e);
+        em.lock(m, LockModeType.PESSIMISTIC_WRITE);
+        ReferencedEntity e1 = em.find(ReferencedEntity.class, 0);
+        assertNotNull(e1);
+        em.lock(e1, LockModeType.PESSIMISTIC_WRITE);
+    }
 
-        // First access, then refresh
-        assertEquals("ok", e.status());
-        em.refresh(e, LockModeType.PESSIMISTIC_WRITE);
+    /**
+     * FAILS!
+     */
+    @Test
+    @Transactional
+    void findAndLock() {
+        System.out.println("------------------------------------------------------------");
+        System.out.println("---------------- NEW TEST: findAndLock      ----------------");
+        System.out.println("------------------------------------------------------------");
+
+        MainEntity m = em.find(MainEntity.class, 0, LockModeType.PESSIMISTIC_WRITE);
+        ReferencedEntity e1 = em.find(ReferencedEntity.class, 0, LockModeType.PESSIMISTIC_WRITE);
+        assertNotNull(m);
+        assertNotNull(e1);
     }
 
     /**
@@ -112,15 +104,16 @@ class DoTest {
      */
     @Test
     @Transactional
-    void directLoading() {
+    void findAndLockLock() {
         System.out.println("------------------------------------------------------------");
-        System.out.println("---------------- NEW TEST: directLoading    ----------------");
+        System.out.println("---------------- NEW TEST: findAndLockLock  ----------------");
         System.out.println("------------------------------------------------------------");
 
-        ReferencedEntity e = em.find(ReferencedEntity.class, 1);
-        assertNotNull(e);
-        em.refresh(e, LockModeType.PESSIMISTIC_WRITE);
-        assertEquals("warn", e.status());
+        MainEntity m = em.find(MainEntity.class, 0, LockModeType.PESSIMISTIC_WRITE);
+        ReferencedEntity e1 = em.find(ReferencedEntity.class, 0);
+        assertNotNull(m);
+        assertNotNull(e1);
+        em.lock(e1, LockModeType.PESSIMISTIC_WRITE);
     }
 
 }
