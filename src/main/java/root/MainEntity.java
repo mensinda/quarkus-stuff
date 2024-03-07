@@ -28,8 +28,4 @@ public class MainEntity {
         this.id = id;
         this.referenced = referenced;
     }
-
-    public ReferencedEntity referenced() {
-        return referenced;
-    }
 }

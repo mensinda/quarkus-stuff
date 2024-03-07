@@ -23,8 +23,8 @@ class DoTest {
     @Transactional
     static void setup() {
         final EntityManager em = CDI.current().select(EntityManager.class).get();
-        final ReferencedEntity e1 = new ReferencedEntity(0, "ok");
-        final ReferencedEntity e2 = new ReferencedEntity(1, "warn");
+        final ReferencedEntity e1 = new ReferencedEntity(0);
+        final ReferencedEntity e2 = new ReferencedEntity(1);
         em.persist(e1);
         em.persist(e2);
         final MainEntity e3 = new MainEntity(0, e1);
