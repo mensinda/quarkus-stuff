@@ -104,6 +104,23 @@ class DoTest {
      */
     @Test
     @Transactional
+    void loadFindAndLock() {
+        System.out.println("------------------------------------------------------------");
+        System.out.println("---------------- NEW TEST: loadFindAndLock  ----------------");
+        System.out.println("------------------------------------------------------------");
+
+        em.find(ReferencedEntity.class, 0);
+        MainEntity m = em.find(MainEntity.class, 0, LockModeType.PESSIMISTIC_WRITE);
+        ReferencedEntity e1 = em.find(ReferencedEntity.class, 0, LockModeType.PESSIMISTIC_WRITE);
+        assertNotNull(m);
+        assertNotNull(e1);
+    }
+
+    /**
+     * Works as expected
+     */
+    @Test
+    @Transactional
     void findAndLockLock() {
         System.out.println("------------------------------------------------------------");
         System.out.println("---------------- NEW TEST: findAndLockLock  ----------------");
