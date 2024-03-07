@@ -116,4 +116,22 @@ class DoTest {
         em.lock(e1, LockModeType.PESSIMISTIC_WRITE);
     }
 
+    /**
+     * FAILS!
+     */
+    @Test
+    @Transactional
+    void lockFindAndLock() {
+        System.out.println("------------------------------------------------------------");
+        System.out.println("---------------- NEW TEST: lockFindAndLock  ----------------");
+        System.out.println("------------------------------------------------------------");
+
+        MainEntity m = em.find(MainEntity.class, 0);
+        assertNotNull(m);
+        em.lock(m, LockModeType.PESSIMISTIC_WRITE);
+        ReferencedEntity e1 = em.find(ReferencedEntity.class, 0, LockModeType.PESSIMISTIC_WRITE);
+        assertNotNull(e1);
+
+    }
+
 }
