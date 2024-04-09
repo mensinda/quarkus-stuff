@@ -1,6 +1,6 @@
-package base2.api.sls.std;
+package base1.sls.std;
 
-import base2.api.sls.Stapler;
+import base1.sls.Stapler;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

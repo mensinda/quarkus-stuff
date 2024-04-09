@@ -1,4 +1,4 @@
-package base2.api.sls;
+package base1.sls;
 
 import base1.tv.Transporter;
 import jakarta.persistence.Entity;
