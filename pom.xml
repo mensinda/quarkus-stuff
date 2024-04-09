@@ -10,8 +10,8 @@
   <modules>
     <module>base1</module>
     <module>base2</module>
-    <module>base3</module>
-    <module>base4</module>
+    <!--<module>base3</module>
+    <module>base4</module>-->
     <module>main</module>
   </modules>
 

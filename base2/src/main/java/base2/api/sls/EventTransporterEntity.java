@@ -1,6 +1,6 @@
-package base3.sls;
+package base2.api.sls;
 
-import base2.api.Transporter;
+import base1.tv.Transporter;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

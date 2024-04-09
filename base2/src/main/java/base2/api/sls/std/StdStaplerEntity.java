@@ -1,8 +1,6 @@
-package base3.sls.std;
+package base2.api.sls.std;
 
-import base1.persistence.TupSpiReference;
-import base3.sls.Stapler;
-import base3.sls.StaplerTyp;
+import base2.api.sls.Stapler;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -12,11 +10,11 @@ import jakarta.persistence.Table;
 @DiscriminatorValue("STA")
 public class StdStaplerEntity extends Stapler {
 
-    public StdStaplerEntity(String id, String beschreibung, StaplerTyp staplerTyp) {
+    public StdStaplerEntity(String id, String beschreibung, String staplerTyp) {
         super("STA" + id);
         this.id = id;
         this.beschreibung = beschreibung;
-        this.staplerTyp = TupSpiReference.create(staplerTyp);
+        this.staplerTyp = staplerTyp;
     }
 
     protected StdStaplerEntity() {

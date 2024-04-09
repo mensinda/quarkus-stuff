@@ -1,4 +1,4 @@
-package base2.api;
+package base1.tv;
 
 import base1.persistence.TupAbstractEntity;
 import jakarta.persistence.Entity;

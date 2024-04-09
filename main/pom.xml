@@ -16,7 +16,7 @@
   <dependencies>
     <dependency>
       <groupId>foo</groupId>
-      <artifactId>base3</artifactId>
+      <artifactId>base2</artifactId>
       <version>${revision}</version>
     </dependency>
   </dependencies>
