@@ -8,12 +8,12 @@
   <properties>
     <compiler-plugin.version>3.8.1</compiler-plugin.version>
     <failsafe.useModulePath>false</failsafe.useModulePath>
-    <maven.compiler.release>17</maven.compiler.release>
+    <maven.compiler.release>21</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-    <quarkus.platform.version>3.8.1</quarkus.platform.version>
+    <quarkus.platform.version>3.8.3</quarkus.platform.version>
     <surefire-plugin.version>3.2.5</surefire-plugin.version>
   </properties>
   <dependencyManagement>
@@ -22,6 +22,13 @@
         <groupId>${quarkus.platform.group-id}</groupId>
         <artifactId>${quarkus.platform.artifact-id}</artifactId>
         <version>${quarkus.platform.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>tup</groupId>
+        <artifactId>tupstd-bom</artifactId>
+        <version>4.2.7</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -48,6 +55,28 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-junit5</artifactId>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jetbrains</groupId>
+      <artifactId>annotations</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>tup.std.app.tv.sls</groupId>
+      <artifactId>tupstdapptv-sls</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>tup.std.mid.blacklist</groupId>
+          <artifactId>tupstdmid-blacklist-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>tup.std.connect.nts</groupId>
+          <artifactId>tupstdconnect-nts-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>tup.std.mid.serialisation</groupId>
+          <artifactId>tupstdmid-serialisation-api</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
   </dependencies>
   <build>

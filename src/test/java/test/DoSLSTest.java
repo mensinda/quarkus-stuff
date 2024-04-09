@@ -6,37 +6,62 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.LockModeType;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
-import root.StaplerTypReplica;
-import root.StdStaplerReplicaEntity;
+import tup.std.app.tv.sls.std.StdStaplerEntity;
+import tup.std.app.tv.sls.std.StdStaplerFactory;
+import tup.std.app.tv.sls.std.StdStaplerTypEntity;
+import tup.std.app.tv.sls.std.StdStaplerTypFactory;
+import tup.std.mid.persistence.api.TupAbstractEntity;
+import tup.std.mid.persistence.api.TupInternalApi;
+import tup.std.mid.persistence.api.TupOidApi;
+
+import java.lang.reflect.Field;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @QuarkusTest
-class DoTest {
+class DoSLSTest {
 
     @Inject
     EntityManager em;
 
+    // Dummy inject
+    @Inject
+    TupInternalApi tupInternalApi;
+
+    @Inject
+    TupOidApi tupOidApi;
+
+    private <T extends TupAbstractEntity> T patchOid(T entity, String oid) {
+        try {
+            Field oidField = TupAbstractEntity.class.getDeclaredField("oid");
+            oidField.setAccessible(true);
+            oidField.set(entity, oid);
+        } catch (IllegalAccessException | NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        }
+
+        return entity;
+    }
+
     @Transactional
-    void setup() {
+    String setup() {
         System.out.println("------------------------------------------------------------");
         System.out.println("---------------- NEW TEST: setup            ----------------");
         System.out.println("------------------------------------------------------------");
 
-        final StaplerTypReplica staplerTyp = new StaplerTypReplica("STT-generic");
-        em.persist(staplerTyp);
-        final StdStaplerReplicaEntity stapler = new StdStaplerReplicaEntity("001", "Stapler 001", staplerTyp);
-        em.persist(stapler);
+        StdStaplerTypEntity staplerTyp = StdStaplerTypFactory.create("Test Testington", "test");
+        StdStaplerEntity stapler = StdStaplerFactory.create("001", "Stapler 001", staplerTyp, "foo.bar", null);
+        return stapler.getOid();
     }
 
     @Transactional
-    void modify() {
+    void modify(String oid) {
         System.out.println("------------------------------------------------------------");
         System.out.println("---------------- NEW TEST: modify           ----------------");
         System.out.println("------------------------------------------------------------");
 
-        StdStaplerReplicaEntity stapler = em.find(StdStaplerReplicaEntity.class, "STA001", LockModeType.PESSIMISTIC_WRITE);
+        StdStaplerEntity stapler = em.find(StdStaplerEntity.class, oid, LockModeType.PESSIMISTIC_WRITE);
         assertNotNull(stapler);
         assertEquals("001", stapler.id());
         assertEquals("Stapler 001", stapler.beschreibung());
@@ -46,12 +71,12 @@ class DoTest {
     }
 
     @Transactional
-    void verify() {
+    void verify(String oid) {
         System.out.println("------------------------------------------------------------");
         System.out.println("---------------- NEW TEST: verify           ----------------");
         System.out.println("------------------------------------------------------------");
 
-        StdStaplerReplicaEntity stapler = em.find(StdStaplerReplicaEntity.class, "STA001");
+        StdStaplerEntity stapler = em.find(StdStaplerEntity.class, oid);
         assertNotNull(stapler);
         assertEquals("001", stapler.id());
         assertEquals("S - 001", stapler.beschreibung());
@@ -59,8 +84,8 @@ class DoTest {
 
     @Test
     void mainTest() {
-        setup();
-        modify();
-        verify();
+        String oid = setup();
+        modify(oid);
+        verify(oid);
     }
 }
