@@ -6,8 +6,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.LockModeType;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
-import base3.sls.StaplerTypReplica;
-import base3.sls.std.StdStaplerReplicaEntity;
+import base3.sls.StaplerTyp;
+import base3.sls.std.StdStaplerEntity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -24,9 +24,9 @@ class DoTest {
         System.out.println("---------------- NEW TEST: setup            ----------------");
         System.out.println("------------------------------------------------------------");
 
-        final StaplerTypReplica staplerTyp = new StaplerTypReplica("STT-generic");
+        final StaplerTyp staplerTyp = new StaplerTyp("STT-generic");
         em.persist(staplerTyp);
-        final StdStaplerReplicaEntity stapler = new StdStaplerReplicaEntity("001", "Stapler 001", staplerTyp);
+        final StdStaplerEntity stapler = new StdStaplerEntity("001", "Stapler 001", staplerTyp);
         em.persist(stapler);
     }
 
@@ -36,7 +36,7 @@ class DoTest {
         System.out.println("---------------- NEW TEST: modify           ----------------");
         System.out.println("------------------------------------------------------------");
 
-        StdStaplerReplicaEntity stapler = em.find(StdStaplerReplicaEntity.class, "STA001", LockModeType.PESSIMISTIC_WRITE);
+        StdStaplerEntity stapler = em.find(StdStaplerEntity.class, "STA001", LockModeType.PESSIMISTIC_WRITE);
         assertNotNull(stapler);
         assertEquals("001", stapler.id());
         assertEquals("Stapler 001", stapler.beschreibung());
@@ -51,7 +51,7 @@ class DoTest {
         System.out.println("---------------- NEW TEST: verify           ----------------");
         System.out.println("------------------------------------------------------------");
 
-        StdStaplerReplicaEntity stapler = em.find(StdStaplerReplicaEntity.class, "STA001");
+        StdStaplerEntity stapler = em.find(StdStaplerEntity.class, "STA001");
         assertNotNull(stapler);
         assertEquals("001", stapler.id());
         assertEquals("S - 001", stapler.beschreibung());

@@ -16,27 +16,8 @@
   <dependencies>
     <dependency>
       <groupId>foo</groupId>
-      <artifactId>base4</artifactId>
+      <artifactId>base3</artifactId>
       <version>${revision}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>tup.std.app.tv.sls</groupId>
-      <artifactId>tupstdapptv-sls</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>tup.std.mid.blacklist</groupId>
-          <artifactId>tupstdmid-blacklist-api</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>tup.std.connect.nts</groupId>
-          <artifactId>tupstdconnect-nts-api</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>tup.std.mid.serialisation</groupId>
-          <artifactId>tupstdmid-serialisation-api</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
   </dependencies>
 

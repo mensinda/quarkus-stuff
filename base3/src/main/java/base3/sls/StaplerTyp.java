@@ -4,11 +4,11 @@ import base1.persistence.TupAbstractEntity;
 import jakarta.persistence.Entity;
 
 @Entity
-public class StaplerTypReplica extends TupAbstractEntity {
-    public StaplerTypReplica(String oid) {
+public class StaplerTyp extends TupAbstractEntity {
+    public StaplerTyp(String oid) {
         super(oid);
     }
 
-    public StaplerTypReplica() {
+    public StaplerTyp() {
     }
 }

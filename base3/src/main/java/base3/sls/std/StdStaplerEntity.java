@@ -1,25 +1,25 @@
 package base3.sls.std;
 
 import base1.persistence.TupSpiReference;
-import base3.sls.StaplerReplica;
-import base3.sls.StaplerTypReplica;
+import base3.sls.Stapler;
+import base3.sls.StaplerTyp;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
-@Entity(name = "StdStaplerReplica")
-@Table(name = "STDSTAPLERREPLICA")
+@Entity(name = "StdStapler")
+@Table(name = "STDSTAPLER")
 @DiscriminatorValue("STA")
-public class StdStaplerReplicaEntity extends StaplerReplica {
+public class StdStaplerEntity extends Stapler {
 
-    public StdStaplerReplicaEntity(String id, String beschreibung, StaplerTypReplica staplerTyp) {
+    public StdStaplerEntity(String id, String beschreibung, StaplerTyp staplerTyp) {
         super("STA" + id);
         this.id = id;
         this.beschreibung = beschreibung;
         this.staplerTyp = TupSpiReference.create(staplerTyp);
     }
 
-    protected StdStaplerReplicaEntity() {
+    protected StdStaplerEntity() {
         // JPA
     }
 

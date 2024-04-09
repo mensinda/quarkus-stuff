@@ -7,16 +7,16 @@ import jakarta.persistence.InheritanceType;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class TransporterReplica extends TupAbstractEntity {
+public abstract class Transporter extends TupAbstractEntity {
 
     protected String id;
     protected String beschreibung;
 
-    protected TransporterReplica(String oid) {
+    protected Transporter(String oid) {
         super(oid);
     }
 
-    protected TransporterReplica() {
+    protected Transporter() {
     }
 
     public String id() {

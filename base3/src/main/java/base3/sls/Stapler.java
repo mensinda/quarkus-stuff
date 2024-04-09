@@ -1,7 +1,7 @@
 package base3.sls;
 
 import base1.persistence.TupSpiReference;
-import base2.api.TransporterReplica;
+import base2.api.Transporter;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
@@ -9,20 +9,20 @@ import jakarta.persistence.Transient;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class StaplerReplica extends TransporterReplica {
+public abstract class Stapler extends Transporter {
     @Transient
     protected TransportQueueImp transportQueueImp;
 
-    protected TupSpiReference<StaplerTypReplica> staplerTyp;
+    protected TupSpiReference<StaplerTyp> staplerTyp;
 
-    protected StaplerReplica(String oid) {
+    protected Stapler(String oid) {
         super(oid);
     }
 
-    protected StaplerReplica() {
+    protected Stapler() {
     }
 
-    public StaplerTypReplica staplerTyp() {
+    public StaplerTyp staplerTyp() {
         return staplerTyp == null ? null : staplerTyp.entity();
     }
 
