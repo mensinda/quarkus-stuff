@@ -1,6 +1,5 @@
-package base1.sls;
+package base1;
 
-import base1.tv.Transporter;
 import jakarta.persistence.Entity;
 
 @Entity

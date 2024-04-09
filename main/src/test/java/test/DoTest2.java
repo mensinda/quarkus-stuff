@@ -11,8 +11,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+/**
+ * Works as expected!
+ */
 @QuarkusTest
-class DoTest {
+class DoTest2 {
 
     @Inject
     EntityManager em;
@@ -38,7 +41,7 @@ class DoTest {
         assertEquals("001", stapler.id());
         assertEquals("Stapler 001", stapler.beschreibung());
 
-        stapler.beschreibungAendern("S - 001");
+        stapler.transporterBeschreibungAendern("S - 001");
         assertEquals("S - 001", stapler.beschreibung());
     }
 
