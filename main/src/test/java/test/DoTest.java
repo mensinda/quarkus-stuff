@@ -6,8 +6,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.LockModeType;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
-import root.StaplerTypReplica;
-import root.StdStaplerReplicaEntity;
+import base3.sls.StaplerTypReplica;
+import base3.sls.std.StdStaplerReplicaEntity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

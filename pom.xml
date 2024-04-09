@@ -4,8 +4,19 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>foo</groupId>
   <artifactId>bar</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>${revision}</version>
+
+  <packaging>pom</packaging>
+  <modules>
+    <module>base1</module>
+    <module>base2</module>
+    <module>base3</module>
+    <module>base4</module>
+    <module>main</module>
+  </modules>
+
   <properties>
+    <revision>1.0-SNAPSHOT</revision>
     <compiler-plugin.version>3.8.1</compiler-plugin.version>
     <failsafe.useModulePath>false</failsafe.useModulePath>
     <maven.compiler.release>21</maven.compiler.release>
@@ -16,6 +27,7 @@
     <quarkus.platform.version>3.8.3</quarkus.platform.version>
     <surefire-plugin.version>3.2.5</surefire-plugin.version>
   </properties>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -34,87 +46,13 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+
   <dependencies>
-    <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-arc</artifactId>
-    </dependency>
-      <dependency>
-          <groupId>io.quarkus</groupId>
-          <artifactId>quarkus-narayana-jta</artifactId>
-      </dependency>
-    <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-hibernate-orm</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-jdbc-h2</artifactId>
-    </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-junit5</artifactId>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.jetbrains</groupId>
-      <artifactId>annotations</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>tup.std.app.tv.sls</groupId>
-      <artifactId>tupstdapptv-sls</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>tup.std.mid.blacklist</groupId>
-          <artifactId>tupstdmid-blacklist-api</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>tup.std.connect.nts</groupId>
-          <artifactId>tupstdconnect-nts-api</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>tup.std.mid.serialisation</groupId>
-          <artifactId>tupstdmid-serialisation-api</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
   </dependencies>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>${quarkus.platform.group-id}</groupId>
-        <artifactId>quarkus-maven-plugin</artifactId>
-        <version>${quarkus.platform.version}</version>
-        <extensions>true</extensions>
-        <executions>
-          <execution>
-            <goals>
-              <goal>build</goal>
-              <goal>generate-code</goal>
-              <goal>generate-code-tests</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>${compiler-plugin.version}</version>
-        <configuration>
-          <compilerArgs>
-            <arg>-parameters</arg>
-          </compilerArgs>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>${surefire-plugin.version}</version>
-        <configuration>
-          <systemPropertyVariables>
-            <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
-            <maven.home>${maven.home}</maven.home>
-          </systemPropertyVariables>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+
 </project>

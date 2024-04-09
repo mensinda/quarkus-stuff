@@ -1,5 +1,8 @@
-package root;
+package base3.sls.std;
 
+import base1.persistence.TupSpiReference;
+import base3.sls.StaplerReplica;
+import base3.sls.StaplerTypReplica;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

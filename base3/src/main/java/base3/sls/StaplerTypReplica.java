@@ -1,5 +1,6 @@
-package root;
+package base3.sls;
 
+import base1.persistence.TupAbstractEntity;
 import jakarta.persistence.Entity;
 
 @Entity

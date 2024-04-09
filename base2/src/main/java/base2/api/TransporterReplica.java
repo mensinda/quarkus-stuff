@@ -1,5 +1,6 @@
-package root;
+package base2.api;
 
+import base1.persistence.TupAbstractEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;

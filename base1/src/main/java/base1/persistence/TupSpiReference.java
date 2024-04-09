@@ -1,4 +1,4 @@
-package root;
+package base1.persistence;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

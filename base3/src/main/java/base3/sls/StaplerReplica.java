@@ -1,5 +1,7 @@
-package root;
+package base3.sls;
 
+import base1.persistence.TupSpiReference;
+import base2.api.TransporterReplica;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;

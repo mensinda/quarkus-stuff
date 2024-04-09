@@ -1,4 +1,4 @@
-package root;
+package base1.persistence;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
