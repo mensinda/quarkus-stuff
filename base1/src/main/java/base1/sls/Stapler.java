@@ -2,23 +2,22 @@ package base1.sls;
 
 import base1.tv.Transporter;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Stapler extends Transporter {
+public class Stapler extends Transporter {
     protected String staplerTyp;
 
-    protected Stapler(String oid) {
-        super(oid);
+    public Stapler(String id, String beschreibung, String staplerTyp) {
+        super("STA" + id);
+        this.id = id;
+        this.beschreibung = beschreibung;
+        this.staplerTyp = staplerTyp;
     }
 
     protected Stapler() {
     }
 
-    public abstract void beschreibungAendern(String neueBeschreibung);
-
-    public static class TransportQueueImp {
+    public void beschreibungAendern(String neueBeschreibung) {
+        this.beschreibung = neueBeschreibung;
     }
 }
