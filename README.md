@@ -1,14 +1,7 @@
-# Quarkus 3.0 / Hibernate 6 multithreading
+# Quarkus 4.15.1 / Hibernate 6 bug
 
 To reproduce:
 
 ```bash
 mvn clean verify
-```
-
-To go back to Quarkus 2.x:
-
-```bash
-./downgrade.sh
-mvn clean verify # This should work now!
 ```

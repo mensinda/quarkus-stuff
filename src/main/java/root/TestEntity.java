@@ -3,46 +3,50 @@ package root;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.Version;
+import jakarta.persistence.IdClass;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+
+import java.time.Instant;
 
 @Entity
-public class TestEntity extends GenericBaseEntity<ActualEnum> {
+@IdClass(TimeScalePkOidDatum.class)
+public class TestEntity {
 
     @Id
-    private long id;
+    @Column(length = 32, nullable = false)
+    private String oid = null;
 
-    @Version
-    @Column(columnDefinition = "NUMERIC(9) DEFAULT 0")
-    private long version;
+    @Id
+    @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Instant datum;
 
-    private int counter;
+    private String data;
 
     protected TestEntity() {
         // For JPA
     }
 
-    public TestEntity(long id) {
-        this.id = id;
-        this.counter = 0;
+    public TestEntity(String oid, String data) {
+        this.oid = oid;
+        this.datum = Instant.now();
+        this.data = data;
     }
 
-    public void updateStateInEntity(ActualEnum newVal) {
-        this.state = newVal;
+    public Instant getDatum() {
+        return datum;
     }
 
-    public void increment() {
-        counter += 1;
+    public String getData() {
+        return data;
     }
 
-    public long id() {
-        return id;
+    public void updateData(String data) {
+        this.data = data;
     }
 
-    public int counter() {
-        return counter;
-    }
-
-    public long version() {
-        return version;
+    public String getOid() {
+        return oid;
     }
 }
