@@ -3,12 +3,16 @@
 To reproduce:
 
 ```bash
-mvn clean verify
+./run.sh 25
 ```
 
-To go back to Quarkus 2.x:
+or manually:
 
 ```bash
-./downgrade.sh
+pushd libTest
+mvn clean install
+popd
+pushd appTest
 mvn clean verify
+popd
 ```
