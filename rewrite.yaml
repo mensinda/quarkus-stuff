@@ -1,0 +1,22 @@
+---
+type: specs.openrewrite.org/v1beta/style
+name: tup.style.OptimizeImports
+displayName: TUP OptimizeImports Style
+styleConfigs:
+  - org.openrewrite.java.style.ImportLayoutStyle:
+      classCountToUseStarImport: 999
+      nameCountToUseStarImport: 999
+      layout:
+        - 'import javax.*'
+        - 'import java.*'
+        - '<blank line>'
+        - 'import all other imports'
+        - '<blank line>'
+        - 'import static all other imports'
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: tup.recipe.OptimizeImports
+displayName: TUP OptimizeImports
+recipeList:
+  - org.openrewrite.java.RemoveUnusedImports
+  - org.openrewrite.java.OrderImports
